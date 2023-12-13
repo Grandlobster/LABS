@@ -1,157 +1,113 @@
+//Aadesh Lawande
+//Roll no:37
+/* 
+Develop a program in C++ to create a database of student�s information system containing the
+following information: Name, Roll number, Class, Division, Date of Birth, Blood group,
+Contact address, Telephone number, Driving license no. and other. Construct the database with
+suitable member functions. Make use of constructor, default constructor, copy constructor,
+destructor, static member functions, friend class, this pointer, inline code and dynamic memory
+allocation operators-new and delete as well as exception handling
+*/
 #include <iostream>
 #include <string>
-
+#include <stdexcept>
 using namespace std;
 
-class Student
-{
+class Student {
 private:
-    string name, dob, bloodGroup, address, yearClass, mobile;
-    int *rollNo;
-    int division;
+    string name;
+    int rollNumber;
+    string className;
+    char division;
+    string dob;
+    string bloodGroup;
+    string contactAddress;
+    string telephoneNumber;
+    string drivingLicenseNumber;
+
+    // Private static member to keep track of the total number of students
+    static int totalStudents;
 
 public:
-    friend class Faculty;
-
-    Student()
-    {
-        rollNo = new int;
-        *rollNo = 1;
-        division = 1;
-        name = bloodGroup = dob = address = yearClass = mobile = "";
+    // Default constructor
+    Student() : rollNumber(0), division('A') {
+        totalStudents++;
     }
 
-    ~Student()
-    {
-        delete rollNo;
+    // Parameterized constructor
+    Student(string n, int roll, string cls, char div, string birth, string blood, string address, string phone, string license)
+        : name(n), rollNumber(roll), className(cls), division(div), dob(birth), bloodGroup(blood),
+          contactAddress(address), telephoneNumber(phone), drivingLicenseNumber(license) {
+        totalStudents++;
     }
 
-    void add()
-    {
-        cout << "\nEnter Student Information: ";
-        cout << "\nEnter Name: ";
-        cin.ignore();
-        getline(cin, name);
-        cout << "Enter Roll number: ";
-        cin >> *rollNo;
-        cout << "Enter Year (SE/TE/BE): ";
-        cin >> yearClass;
-        cout << "Enter Division (1/2/3/4): ";
-        cin >> division;
-        cout << "Enter Date of Birth: ";
-        cin >> dob;
-        cout << "Enter Blood Group: ";
-        cin >> bloodGroup;
-        cout << "Enter Mobile number: ";
-        cin >> mobile;
-        cout << "Enter address: ";
-        cin >> address;
+    // Copy constructor
+    Student(const Student &source) {
+        name = source.name;
+        rollNumber = source.rollNumber;
+        className = source.className;
+        division = source.division;
+        dob = source.dob;
+        bloodGroup = source.bloodGroup;
+        contactAddress = source.contactAddress;
+        telephoneNumber = source.telephoneNumber;
+        drivingLicenseNumber = source.drivingLicenseNumber;
+        totalStudents++;
     }
 
-    void display()
-    {
-        cout << "\n-------------------------------------------" << endl;
-        cout << "\nName                      : " << name;
-        cout << "\nRoll No.                  : " << *rollNo;
-        cout << "\nYear (SE/TE/BE)           : " << yearClass;
-        cout << "\nDivision (1/2/3/4)        : " << division;
-        cout << "\nDate of Birth             : " << dob;
-        cout << "\nBlood Group               : " << bloodGroup;
-        cout << "\nMobile Number             : " << mobile;
-        cout << "\nAddress                   : " << address;
-        cout << "\n-------------------------------------------" << endl;
+    // Destructor
+    ~Student() {
+        totalStudents--;
     }
 
-    static void header()
-    {
-        cout << "\n* * * Student Information System * * *\n";
+    // Static member function to get the total number of students
+    static int getTotalStudents() {
+        return totalStudents;
+    }
+
+    // Friend class to access private members
+    friend class Database;
+
+    // Display function
+    void display() const {
+        cout << "Name: " << name << "\nRoll Number: " << rollNumber << "\nClass: " << className
+             << "\nDivision: " << division << "\nDate of Birth: " << dob << "\nBlood Group: " << bloodGroup
+             << "\nContact Address: " << contactAddress << "\nTelephone Number: " << telephoneNumber
+             << "\nDriving License Number: " << drivingLicenseNumber << endl;
     }
 };
 
-class Faculty
-{
-private:
-    int id;
+// Initialize the static member
+int Student::totalStudents = 0;
 
+// Friend class to access private members of Student
+class Database {
 public:
-    Faculty()
-    {
-        id = 0;
-    }
-
-    Faculty(const Faculty &f1)
-    {
-        id = f1.id;
-    }
-
-    void display(Student &obj, int f_d)
-    {
-        try
-        {
-            if (obj.division == f_d)
-            {
-                obj.display();
-            }
-            else
-            {
-                throw(obj.division);
-            }
-        }
-        catch (int x)
-        {
-            cout << "\nInvalid Division: You are not teaching to this division." << endl;
-        }
+    static void printTotalStudents() {
+        cout << "Total Students: " << Student::getTotalStudents() << endl;
     }
 };
 
-int main()
-{
-    Student st[5];
-    Faculty f;
-    int ch = 0, count = 0;
+int main() {
+    try {
+        // Creating objects using different constructors
+        Student student1;
+        Student student2("Payal Chavan", 101, "Robotics", 'A', "15/11/2004", "Unknow", "Narhe", "???", "??");
 
-    do
-    {
-        cout << "\n* * * * Student Information System * * * *\n";
-        cout << "\n* * * Menu * * *\n";
-        cout << "1. Add Information\n";
-        cout << "2. Display Information\n";
-        cout << "3. Faculty wise Information\n";
-        cout << "4. Exit\n";
-        cout << "Enter choice: ";
-        cin >> ch;
+        // Displaying student information
+        student1.display();
+        student2.display();
 
-        switch (ch)
-        {
-        case 1:
-            st[count].add();
-            count++;
-            break;
+        // Copying a student
+        Student student3 = student2;
+        student3.display();
 
-        case 2:
-            for (int j = 0; j < count; j++)
-            {
-                Student::header();
-                st[j].display();
-            }
-            break;
-
-        case 3:
-            int f_div;
-            cout << "\nEnter Division of faculty: ";
-            cin >> f_div;
-            for (int j = 0; j < count; j++)
-            {
-                cout << "\n* * * Student Information System (Faculty RAK) * * *\n";
-                f.display(st[j], f_div);
-            }
-            break;
-
-        case 4:
-            exit(0);
-            break;
-        }
-    } while (ch != 4);
+        // Accessing private members using friend class
+        Database::printTotalStudents();
+    } catch (const exception &e) {
+        cerr << "Exception: " << e.what() << endl;
+    }
 
     return 0;
 }
+
