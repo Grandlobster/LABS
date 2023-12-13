@@ -1,0 +1,71 @@
+#include <graphics.h>
+using namespace std;
+
+class WalkingMan
+{
+    int rhx, rhy;
+
+public:
+    void draw(float, float);
+    void draw(int);
+};
+void WalkingMan::draw(int i)
+{
+    line(20, 380, 580, 380);
+
+    if (i % 2 == 0)
+    {
+        line(25 + i, 380, 35 + i, 340);
+        line(45 + i, 380, 35 + i, 340);
+        line(35 + i, 310, 25 + i, 330);
+        delay(20);
+    }
+    else
+    {
+        line(35 + i, 380, 35 + i, 340);
+        line(35 + i, 310, 40 + i, 330);
+        delay(20);
+    }
+
+    line(35 + i, 340, 35 + i, 310);
+    circle(35 + i, 300, 10);
+    line(35 + i, 310, 50 + i, 330);
+
+    line(50 + i, 330, 50 + i, 280);
+    line(15 + i, 280, 85 + i, 280);
+
+    arc(50 + i, 280, 0, 180, -35);
+    arc(55 + i, 330, -180, 360, 5);
+}
+
+void WalkingMan::draw(float x, float y)
+{
+    float j;
+    rhx = x;
+    rhy = y;
+    for (j = 0; j < 250; j++)
+    {
+        outtextxy(rand() % rhx, rand() % (rhy - 50), "`");
+
+        setcolor(WHITE);
+    }
+}
+int main()
+{
+    int gd = DETECT, gm;
+    int rhx, rhy, j, i;
+    WalkingMan obj;
+    initgraph(&gd, &gm, "");
+    for (i = 0; i < 1000; i += 5)
+    {
+        obj.draw(i);
+        rhx = getmaxx();
+        rhy = getmaxy();
+        obj.draw(rhx, rhy);
+        delay(200);
+        cleardevice();
+    }
+
+    getch();
+    return 0;
+}
