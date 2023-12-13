@@ -1,100 +1,84 @@
-#include <iostream>
-#include <string>
+//Aadesh Lawande
+//ROLL NO:37 S2
+/* lab assignment 3 Imagine a publishing company which does marketing for book and outro casstte versions
+ create a class publication that stores the title (string) and price (type float) of publication
+ from this class derive two classes book which adds page count (type int) and tape
+ which adds a playing time in mintues (type float)
+ Write a program that instantiates the book and tape class 
+ Allow the user to enter data and display the data members If an exception is caught,replace all the 
+ data members with zen value. */
+#include<iostream>
+#include<string>
+#include<stdexcept>
+using namespace std;
+class Publication{
+    public:
+        string title;
+        float price;
+        char tem;
+        void input(){
+         cout<<"Enter title :";
+            cin>>title;
+         cout<<"Enter price :";
+         cin>>price;
+     }
+        void display(){
+        cout<<"Price is:"<<price;
+        cout<<"Title is:"<<title;
+        }
+    };
 
-class Publication
-{
-protected:
-    std::string title;
-    float price;
-
-public:
-    Publication() : title(""), price(0.0) {}
-
-    virtual void getData()
-    {
-        std::cout << "Enter title: ";
-        std::cin >> title;
-        std::cout << "Enter price: ";
-        std::cin >> price;
-    }
-
-    virtual void displayData() const
-    {
-        std::cout << "Title: " << title << "\n";
-        std::cout << "Price: $" << price << "\n";
-    }
+class Book : public Publication{
+ public: int pagecount;
+  	 void input1(){
+  	 cout<<"Add Page count\n";
+  	 cin>>pagecount;
+  	 }
+  	 void input1_display(){
+  	 	cout<<"Page count:\n";
+		cout<<pagecount;
+	   }
 };
-
-class Book : public Publication
-{
-private:
-    int pageCount;
-
-public:
-    Book() : pageCount(0) {}
-
-    void getData() override
-    {
-        Publication::getData();
-        std::cout << "Enter page count: ";
-        std::cin >> pageCount;
-    }
-
-    void displayData() const override
-    {
-        Publication::displayData();
-        std::cout << "Page Count: " << pageCount << "\n";
-    }
+class Tape: public Publication{
+ public: float playingtime;
+  	 void input2(){
+  	 cout<<"Add Playing Time\n"<<endl;
+  	 cin>>playingtime;
+  	 }
+  	 void input2_display(){
+  	 	cout<<"Playing time is :\n"<<playingtime<<"min"<<endl;
+	   }
 };
+int main() {
+    // Create instances outside the try-catch block
+    Book book;
+    Tape tape;
 
-class Tape : public Publication
-{
-private:
-    float playingTime;
-
-public:
-    Tape() : playingTime(0.0) {}
-
-    void getData() override
-    {
-        Publication::getData();
-        std::cout << "Enter playing time (minutes): ";
-        std::cin >> playingTime;
+    try {
+        cout << "This is to display std inputs:\n" << endl;
+        book.input();
+        cout << "This is to input book input\n" << endl;
+        book.input1();
+        cout << "This is to input tape input\n" << endl;
+        tape.input2();
+        cout << "This is to display data:\n" << endl;
+        book.input1_display();
+        tape.input2_display();
     }
+    catch (const exception& e) {
+        cout << "Exception is caught" << endl;
+        cerr << "Exception caught: " << e.what() << endl;
 
-    void displayData() const override
-    {
-        Publication::displayData();
-        std::cout << "Playing Time: " << playingTime << " minutes\n";
-    }
-};
+        // Replace values with "Zen" values
+        book = Book();  // Reconstruct the book object
+        tape = Tape();  // Reconstruct the tape object
 
-int main()
-{
-    try
-    {
-        Book book;
-        Tape tape;
-
-        std::cout << "============" << std::endl;
-        std::cout << "Enter details for the book" << std::endl;
-        book.getData();
-        std::cout << "============" << std::endl;
-        std::cout << "Enter details for the tape" << std::endl;
-        tape.getData();
-        std::cout << "============" << std::endl;
-        std::cout << "============" << std::endl;
-        std::cout << "Book details" << std::endl;
-        book.displayData();
-        std::cout << "============" << std::endl;
-        std::cout << "Tape details" << std::endl;
-        tape.displayData();
-        std::cout << "============" << std::endl;
-    }
-    catch (...)
-    {
-        std::cerr << "An exception occurred. Resetting all data members to zero.\n";
+        cout << "Zen values:\n" << endl;
+        book.input1_display();
+        tape.input2_display();
     }
 
     return 0;
 }
+
+
