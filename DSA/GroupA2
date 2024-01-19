@@ -1,0 +1,99 @@
+#include<iostream>
+#include<string>
+using namespace std;
+#define SIZE 10
+
+class Juvenile{
+    struct node{
+        int data;
+        string value;
+        struct node *next;
+    };
+    struct node *head[SIZE];
+public:
+    Juvenile() {
+        for(int i = 0; i < SIZE; ++i)
+            head[i] = nullptr;
+    }
+
+    void insert(){
+        int data_;
+        string value_;
+        cout<<"Enter the data :";
+        cin>>data_;
+        cout<<"Enter the value:";
+        cin>>value_;
+        struct node *nn = new node;
+        nn->data = data_;
+        nn->value = value_;
+        nn->next = nullptr;
+
+        int i = data_ % SIZE;
+        if(head[i] == NULL){
+            head[i] = nn;
+        }
+        else{
+            node *temp = head[i];
+            while(temp->next != NULL){
+                temp = temp->next;
+            }
+            temp->next = nn;
+        }
+    }
+void display() {
+    bool isEmpty = true;
+
+    for (int i = 0; i < SIZE; i++) {
+        if (head[i] != NULL) {
+            isEmpty = false;
+            cout << "Hash Table at index " << i << ":" << endl;
+            node *temp = head[i];
+
+            while (temp != NULL) {
+                cout << "Data is:\t" << temp->data << " Value is :\t" << temp->value << endl;
+                temp = temp->next;
+            }
+        }
+    }
+
+    if (isEmpty) {
+        cout << "Hash Table is empty!" << endl;
+    }
+}
+/*=================================================
+void search(){
+    
+}
+
+
+
+*/
+
+};
+
+int main(){
+    Juvenile h;
+    int choice;
+    do {
+        cout << "\nMenu\n1. Insert\n2. Display\n3. Exit\nEnter choice: ";
+        cin >> choice;
+        switch (choice) {
+            case 1:
+            cout<<"INSERTING ELEMENT:\n";
+                h.insert();
+                break;
+            case 2:
+            cout<<"DISPLAY OF WHOLE LIST:\n";
+                h.display();
+                break;
+            case 3:
+                cout << "Exiting program\n";
+                break;
+            default:
+                cout << "Invalid choice\n";
+                break;
+        }
+    } while (choice != 3);
+
+    return 0;
+}
