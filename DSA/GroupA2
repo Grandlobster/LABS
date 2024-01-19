@@ -41,27 +41,39 @@ public:
         }
     }
 void display() {
-    bool isEmpty = true;
-
     for (int i = 0; i < SIZE; i++) {
-        if (head[i] != NULL) {
-            isEmpty = false;
-            cout << "Hash Table at index " << i << ":" << endl;
-            node *temp = head[i];
+        cout << "Hash Table at index " << i << ": ";
 
+        if (head[i] == NULL) {
+            cout << "Empty" << endl;
+        } else {
+            node *temp = head[i];
             while (temp != NULL) {
-                cout << "Data is:\t" << temp->data << " Value is :\t" << temp->value << endl;
+                cout << "Data is:\t" << temp->data << " Value is :\t" << temp->value << " -> ";
                 temp = temp->next;
             }
+            cout << "NULL" << endl;
         }
     }
-
-    if (isEmpty) {
-        cout << "Hash Table is empty!" << endl;
-    }
 }
+
 /*=================================================
 void search(){
+    int data_;
+    cout<<"Enter the value to be searched:";
+    cin>>data_;
+    int i=value_%SIZE
+    node *temp=head[i];
+    for(int ii=0;ii<SIZE;ii++){
+        if(head[i]->data==value_){
+            
+        }
+    }
+}
+void delete(){
+    int value_;
+    cout<<"Enter the value to be searched:";
+    cin>>value_;
     
 }
 
