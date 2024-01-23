@@ -1,3 +1,4 @@
+// Aadesh Lawande 
 #include<iostream>
 #include<string>
 using namespace std;
@@ -42,52 +43,69 @@ public:
     }
 void display() {
     for (int i = 0; i < SIZE; i++) {
-        cout << "Hash Table at index " << i << ": ";
-
+       // cout << "Hash Table at index " << i << ": ";
+        
         if (head[i] == NULL) {
             cout << "Empty" << endl;
         } else {
             node *temp = head[i];
             while (temp != NULL) {
-                cout << "Data is:\t" << temp->data << " Value is :\t" << temp->value << " -> ";
+                cout << "\t" << temp->data << " :\t" << temp->value << " --> ";
                 temp = temp->next;
             }
             cout << "NULL" << endl;
         }
     }
 }
-
-/*=================================================
-void search(){
+void deletion(){
     int data_;
-    cout<<"Enter the value to be searched:";
+    cout<<"Enter the data to be deleted:\n";
     cin>>data_;
-    int i=value_%SIZE
+    int i=data_%SIZE;
     node *temp=head[i];
-    for(int ii=0;ii<SIZE;ii++){
-        if(head[i]->data==value_){
-            
-        }
+    if(head[i]->data==data_){
+    head[i]->data=0;
+    head[i]->value="";
+    head[i]->next=nullptr;
+    cout<<"DATA DELETED\n";
+    }
+    else{
+    node *temp=head[i];
+    while(temp->data!=data_){
+    temp=temp->next;
+    }
+    temp->next=temp->next->next;
+    cout<<"Data deleted\n";
     }
 }
-void delete(){
-    int value_;
-    cout<<"Enter the value to be searched:";
-    cin>>value_;
-    
+void search(){
+    int data_;
+    cout<<"Enter the data to be searched:";
+    cin>>data_;
+    int i=data_%SIZE;
+    node *temp=head[i];
+    if(temp->data==data_){
+    cout<<"Data is found .....!";
+    }
+    else{
+    while(temp->data!=data_){
+    temp=temp->next;
+    }
+    if(temp->data==data_){
+    cout<<"The given data is found\n";
+    }
+    else{
+    cout<<"Data not found 404...!";
+    }
+    }
 }
-
-
-
-*/
-
 };
 
 int main(){
     Juvenile h;
     int choice;
     do {
-        cout << "\nMenu\n1. Insert\n2. Display\n3. Exit\nEnter choice: ";
+        cout << "\nMenu\n1. Insert\n2. Display\n3. Delete\n4. Search\n5. Exit \nEnter choice: ";
         cin >> choice;
         switch (choice) {
             case 1:
@@ -99,13 +117,21 @@ int main(){
                 h.display();
                 break;
             case 3:
-                cout << "Exiting program\n";
-                break;
+            cout<<"DELETION OF ELEMENT\n";
+               h.deletion();
+               break;
+            case 4:
+            cout<<"SEARCHING OF AN ELEMENT\n";
+            h.search();
+            case 5:
+            cout<<"EXITING THE PROGRAM\n";
+            break;
+          	
             default:
                 cout << "Invalid choice\n";
                 break;
         }
-    } while (choice != 3);
+    } while (choice != 5);
 
     return 0;
 }
