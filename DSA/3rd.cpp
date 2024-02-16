@@ -1,33 +1,4 @@
-/*
-🔘PROBLEM STATEMET:-
-Beginning with an empty binary search tree, Construct binary
-search tree by inserting the values in the order given. After
-constructing a binary tree -
-● Insert new node
-● Find number of nodes in longest path from root
-● Minimum data value found in the tree
-● Change a tree so that the roles of the left and right pointers are swapped at every node
-● Search a value
-*/
-
-/*
-#️⃣ QUICK REVISION NOTES:-
- It is a type of binary tree.
-
-🔹PROPERTIES:-
-1. All nodes of the left subtree are lesser.
-
-2. All node of the right subtree are greater.
-
-3. Left and Right subtree are also BST.
-
-4. There are no DUPLICATE nodes.
-
-5. In-Order traversal of a BST gives an ASCENDING SORTED ARRAY.
-
-🔸Pre-requisites:-
-Knowledge of pointers and dynamic memory allocation
-*/ 
+#include<iostream>
 #include <bits/stdc++.h>
 using namespace std;
 
