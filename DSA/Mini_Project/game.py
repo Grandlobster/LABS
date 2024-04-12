@@ -2,42 +2,46 @@ import pygame
 import random
 import sys
 
-# Initialize Pygame
 pygame.init()
 
-# Set up the display
-WIDTH, HEIGHT = 800, 800
+
+WIDTH, HEIGHT = 750, 750
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Snake and Ladder Board")
 
-# Define colors
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 # Block size (assuming 5x5 board)
 BLOCK_SIZE = min(WIDTH, HEIGHT) // 5
-# Player dot size (adjust as needed)
+
 PLAYER_DOT_SIZE = 20
 
-# Load custom block images (ensure correct image paths)
-custom_block_images = {
-    2: pygame.image.load(r"C:\Users\ADMIN\Programs\abc.png").convert_alpha(),  # Replace with actual path
-    4: pygame.image.load(r"C:\Users\ADMIN\Programs\1.jpg").convert_alpha()   # Replace with actual path
-}
 
+custom_block_images = {
+    1: pygame.image.load(r"C:\Users\ADMIN\Programs\cobra.png").convert_alpha(),
+    2: pygame.image.load(r"C:\Users\ADMIN\Programs\abc.png").convert_alpha(), # Replace with actual path
+    4: pygame.image.load(r"C:\Users\ADMIN\Programs\1.jpg").convert_alpha(),
+   12: pygame.image.load(r"C:\Users\ADMIN\Programs\12.png").convert_alpha(),
+   17: pygame.image.load(r"C:\Users\ADMIN\Programs\17.png").convert_alpha(),
+   18: pygame.image.load(r"C:\Users\ADMIN\Programs\18.png").convert_alpha(),
+    # Replace with actual path
+}
+SNAKES={1:0,18:6,25:17}
+LADDER={12:17}
 # Ensure images are smaller than block size
 for position, image in custom_block_images.items():
     if image.get_width() > BLOCK_SIZE - 10 or image.get_height() > BLOCK_SIZE - 10:
-        image = pygame.transform.scale(image, (BLOCK_SIZE - 10, BLOCK_SIZE - 10))
+        image = pygame.transform.scale(image, (BLOCK_SIZE - 5, BLOCK_SIZE - 5))
 
-# Load default block image and player dot (ensure correct image paths)
+# 
 default_block_image = pygame.image.load(r"C:\Users\ADMIN\Programs\abc.png").convert_alpha()
 player_dot = pygame.image.load(r"C:\Users\ADMIN\Programs\player.png").convert_alpha()
 
-# Dice image size recommendation (adjust as needed)
-dice_image_size = (100, 100)  # This is a suggestion, you can experiment
 
-# Load dice images (ensure correct image paths)
+dice_image_size = (100, 100)  #
+
 dice_images = [
     pygame.image.load(r"C:\Users\ADMIN\Programs\1.jpg").convert_alpha(),
     pygame.image.load(r"C:\Users\ADMIN\Programs\2.jpg").convert_alpha(),
@@ -75,12 +79,12 @@ def render_board(board):
         else:
             screen.blit(default_block_image, block_rect)
 
-        # Draw player dot on current position
+        
         if idx == player_position:
             player_dot_rect = player_dot.get_rect(center=block_rect.center)
             screen.blit(player_dot, player_dot_rect)
 
-        # Draw block number
+        # Draw block number can change according to roll numbers fusion of s2,s3
         font = pygame.font.SysFont(None, 30)
         text = font.render(str(block), True, BLACK)
         text_rect = text.get_rect(center=block_rect.center)
@@ -96,9 +100,16 @@ while True:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 handle_dice_roll()
+
                 player_position += dice_value
-                if player_position >= len(board):
-                    player_position = len(board) - 1
+                if player_position not in SNAKES and player_position not in LADDER:
+                    if player_position >= len(board):
+                     player_position = len(board) - 1
+                elif player_position in SNAKES:
+                    player_position=SNAKES[player_position]
+                elif player_position in LADDER:
+                    player_position=LADDER[player_position]
+
 
     screen.fill(WHITE)
     render_board(board)
