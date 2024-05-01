@@ -1,0 +1,28 @@
+int red=11;
+int yellow=12;
+int green=13;
+int counter=0;
+void setup(){
+    pinMode(red,OUTPUT);
+    pinMode(yellow,OUTPUT);
+    pinMode(green,OUTPUT);
+}
+void loop(){
+    if(counter<100){
+        digitalWrite(red,HIGH);
+        digitalWrite(yellow,HIGH);
+        digitalWrite(green,HIGH);
+    }
+    else if(counter >=101 && counter <=200){
+        digitalWrite(red,LOW);
+        digitalWrite(yellow,HIGH);
+        digitalWrite(green,LOW);
+    }
+    else if(counter >200){
+        digitalWrite(red,HIGH);
+        digitalWrite(yellow,LOW);
+        digitalWrite(green,LOW);
+    }
+    counter +=1;
+    delay(1000);
+}
