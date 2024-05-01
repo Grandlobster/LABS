@@ -1,0 +1,32 @@
+int redLed = 8;
+int yellowLed = 9;
+int greenLed = 10;
+char userInput;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(redLed, OUTPUT);
+  pinMode(yellowLed, OUTPUT);
+  pinMode(greenLed, OUTPUT);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    userInput = Serial.read();
+    Serial.print("You entered: ");
+    Serial.println(userInput);
+    if (userInput == 'r') {
+      digitalWrite(redLed, HIGH);
+      digitalWrite(yellowLed, LOW);
+      digitalWrite(greenLed, LOW);
+    } else if (userInput == 'y') {
+      digitalWrite(redLed, LOW);
+      digitalWrite(yellowLed, HIGH);
+      digitalWrite(greenLed, LOW);
+    } else if (userInput == 'g') {
+      digitalWrite(redLed, LOW);
+      digitalWrite(yellowLed, LOW);
+      digitalWrite(greenLed, HIGH);
+    }
+  }
+}
