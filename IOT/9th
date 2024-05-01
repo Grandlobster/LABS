@@ -1,0 +1,25 @@
+#define RED_PIN 9
+#define GREEN_PIN 10
+#define BLUE_PIN 11
+#define RED_POTENTIOMETER A0
+#define GREEN_POTENTIOMETER A1
+#define BLUE_POTENTIOMETER A2
+
+void setup() {
+  // Set the LED pins as outputs
+  pinMode(RED_PIN, OUTPUT);
+  pinMode(GREEN_PIN, OUTPUT);
+  pinMode(BLUE_PIN, OUTPUT);
+}
+
+void loop() {
+  // Read the values from the potentiometers
+  int redValue = analogRead(RED_POTENTIOMETER) / 4;
+  int greenValue = analogRead(GREEN_POTENTIOMETER) / 4;
+  int blueValue = analogRead(BLUE_POTENTIOMETER) / 4;
+
+  // Write the values to the LED pins
+  analogWrite(RED_PIN, redValue);
+  analogWrite(GREEN_PIN, greenValue);
+  analogWrite(BLUE_PIN, blueValue);
+}
