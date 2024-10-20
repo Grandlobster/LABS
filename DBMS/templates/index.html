@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Employee Management System</h1>
+    
+    <h2>Add New Employee</h2>
+    <form action="/add" method="POST">
+        <label for="emp_name">Name:</label>
+        <input type="text" id="emp_name" name="emp_name" required>
+        <label for="dept_id">Department ID:</label>
+        <input type="number" id="dept_id" name="dept_id" required>
+        <label for="salary">Salary:</label>
+        <input type="number" id="salary" name="salary" step="0.01" required>
+        <button type="submit">Add Employee</button>
+    </form>
+
+    <h2>Update Employee Salary</h2>
+    <form action="/update" method="POST">
+        <label for="emp_id">Employee ID:</label>
+        <input type="number" id="emp_id" name="emp_id" required>
+        <label for="salary">New Salary:</label>
+        <input type="number" id="salary" name="salary" step="0.01" required>
+        <button type="submit">Update Salary</button>
+    </form>
+
+    <h2>Employees List</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Salary</th>
+            <th>Actions</th>
+        </tr>
+        {% for emp in employees %}
+        <tr>
+            <td>{{ emp[0] }}</td>
+            <td>{{ emp[1] }}</td>
+            <td>{{ emp[2] }}</td>
+            <td>{{ emp[3] }}</td>
+            <td>
+                <a href="/delete/{{ emp[0] }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
